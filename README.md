@@ -133,13 +133,13 @@ uvx ruff format --check .  # formatting
 ## Citation
 
 ```bibtex
-@article{bodnar2022neural,
-  title   = {Neural Sheaf Diffusion: A Topological Perspective on
-             Heterophily and Oversmoothing in GNNs},
-  author  = {Bodnar, Cristian and Di Giovanni, Francesco and Chamberlain,
-             Benjamin Paul and Lio, Pietro and Bronstein, Michael M.},
-  journal = {Advances in Neural Information Processing Systems (NeurIPS)},
-  year    = {2022}
+@inproceedings{bodnar2022neural,
+title={Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in {GNN}s},
+author={Cristian Bodnar and Francesco Di Giovanni and Benjamin Paul Chamberlain and Pietro Lio and Michael M. Bronstein},
+booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
+year={2022},
+url={https://openreview.net/forum?id=vbPsD-BhOZ}
 }
 
 @inproceedings{pei2020geomgcn,
