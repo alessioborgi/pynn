@@ -44,6 +44,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
+    "sphinx.ext.doctest",
     "sphinx_autodoc_typehints",
     "sphinx_copybutton",
     "sphinx_design",
@@ -183,3 +184,16 @@ python_use_unqualified_type_names = True
 suppress_warnings = [
     "autosummary",  # tolerate autosummary stubs during incremental rollout
 ]
+
+# -- Custom roles for inherited third-party docstrings -----------------------
+from docutils import nodes  # noqa: E402
+from docutils.parsers.rst import roles as _roles  # noqa: E402
+
+
+def _passthrough_role(name, rawtext, text, lineno, inliner, options=None, content=None):
+    return [nodes.literal(rawtext, text)], []
+
+
+def setup(app):
+    app.add_role("pyg", _passthrough_role)
+    app.add_role("paramref", _passthrough_role)

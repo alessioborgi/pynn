@@ -40,7 +40,7 @@ nested dataclass:
 
 ## Presets
 
-{py:mod}`exp.presets` ships one entry per dataset in the `PRESETS` dict,
+{py:mod}`exp.registries.presets` ships one entry per dataset in the `PRESETS` dict,
 storing the hyperparameters found by the sweep. Selecting one with
 `--preset <name>` injects it as the tyro default; any field can be
 overridden on the same command line:
@@ -61,7 +61,7 @@ python -m exp.run \
 
 ## Sweeps
 
-{py:mod}`exp.sweep` runs an Optuna study with `MedianPruner`. At each
+{py:mod}`exp.sweeps.sweep` runs an Optuna study with `MedianPruner`. At each
 reporting step $t$, the pruner computes the median intermediate value
 $\tilde{v}(t)$ over all *completed* trials. A running trial is pruned if
 its value falls below that median:

@@ -12,7 +12,7 @@ Configuration
    :members:
    :show-inheritance:
 
-.. automodule:: exp.presets
+.. automodule:: exp.registries.presets
    :members:
    :show-inheritance:
 
@@ -42,6 +42,6 @@ Training
    :members:
    :show-inheritance:
 
-.. automodule:: exp.sweep
+.. automodule:: exp.sweeps.sweep
    :members:
    :show-inheritance:

@@ -24,7 +24,6 @@ NSD model
    :toctree: generated
    :nosignatures:
 
-   NSDConfig
    NSDModel
    NSDVariant
 
