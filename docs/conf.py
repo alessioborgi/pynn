@@ -112,25 +112,46 @@ myst_enable_extensions = [
 myst_heading_anchors = 3
 
 # -- HTML output -------------------------------------------------------------
-html_theme = "furo"
+html_theme = "pydata_sphinx_theme"
 html_title = f"{project} {release}"
 html_static_path = ["_static"]
+html_css_files = ["custom.css"]
 html_show_sourcelink = False
 html_theme_options = {
-    "sidebar_hide_name": False,
-    "navigation_with_keys": True,
-    "source_repository": f"{_REPO_URL}/",
-    "source_branch": "main",
-    "source_directory": "docs/",
-    "top_of_page_buttons": ["view", "edit"],
-    "footer_icons": [
-        {
-            "name": "GitHub",
-            "url": _REPO_URL,
-            "html": "",
-            "class": "fa-brands fa-github",
+    "logo": {
+        "text": project,
+    },
+    "use_edit_page_button": True,
+    "github_url": _REPO_URL,
+    "icon_links": [],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "show_toc_level": 2,
+    "navigation_depth": 4,
+    "show_nav_level": 1,
+    "footer_start": ["copyright"],
+    "footer_center": [],
+    "footer_end": ["sphinx-version"],
+    "primary_sidebar_end": ["indices.html"],
+    "secondary_sidebar_items": ["page-toc"],
+}
+
+html_context = {
+    "github_user": _REPO_OWNER,
+    "github_repo": _REPO_NAME,
+    "github_version": "main",
+    "doc_path": "docs",
+}
+
+# -- MathJax -----------------------------------------------------------------
+mathjax3_config = {
+    "tex": {
+        "macros": {
+            "R": r"\mathbb{R}",
+            "stalks": r"\mathcal{F}",
+            "Lap": r"\mathbf{L}_{\mathcal{F}}",
         },
-    ],
+        "tags": "ams",
+    },
 }
 
 # -- Copy button -------------------------------------------------------------
@@ -139,7 +160,6 @@ copybutton_prompt_is_regexp = True
 
 # -- OpenGraph ---------------------------------------------------------------
 ogp_site_url = _PAGES_URL
-ogp_image = "_static/og-image.png"
 
 # -- Linkcheck configuration -------------------------------------------------
 linkcheck_ignore = [
