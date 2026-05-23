@@ -17,7 +17,7 @@ where $K = 10$ and $s_k$ is the test score (accuracy or ROC-AUC) on fold $k$.
 Each fold uses Lightning `EarlyStopping` monitoring either `val_loss`
 (default) or `val_<metric>` depending on `--optim.stop-strategy`.
 `ModelCheckpoint` saves the epoch with the best monitored value, and
-`Trainer.test` is called on that checkpoint — not on the final epoch
+`Trainer.test` is called on that checkpoint, not on the final epoch
 weights. This prevents over-optimistic results from early stopping
 collateral: the model never sees the test split during training or
 validation.
@@ -27,16 +27,16 @@ validation.
 Every field in {py:mod}`exp.config` is exposed as a CLI flag, grouped by
 nested dataclass:
 
-* `--dataset.*` — dataset name, root path for downloads, split override.
-* `--model.*` — `variant` (model family), `d` (stalk dimension), `hidden_dim`,
+* `--dataset.*`: dataset name, root path for downloads, split override.
+* `--model.*`: `variant` (model family), `d` (stalk dimension), `hidden_dim`,
   `num_layers`, and architecture-specific flags.
-* `--reg.*` — input dropout, intermediate dropout, weight decay.
-* `--optim.*` — optimizer choice, learning rate, LR scheduler, and
+* `--reg.*`: input dropout, intermediate dropout, weight decay.
+* `--optim.*`: optimizer choice, learning rate, LR scheduler, and
   `stop-strategy` (`loss` or `metric`).
-* `--cv.*` — number of folds, global RNG seed.
-* `--hardware.*` — accelerator (`cpu`/`gpu`/`auto`), floating-point
+* `--cv.*`: number of folds, global RNG seed.
+* `--hardware.*`: accelerator (`cpu`/`gpu`/`auto`), floating-point
   precision, dataloader workers.
-* `--wandb.*` — project, entity, run tags; requires `--extra wandb`.
+* `--wandb.*`: project, entity, run tags; requires `--extra wandb`.
 
 ## Presets
 
@@ -82,7 +82,7 @@ same SQLite study file:
 python -m exp.sweep --dataset cora --study-name cora_sweep \
     --storage sqlite:///sweeps/cora.db --n-trials 50
 
-# Machine 2 … N (join the same study)
+# Machine 2 ... N (join the same study)
 python -m exp.sweep --dataset cora --study-name cora_sweep \
     --storage sqlite:///sweeps/cora.db --n-trials 50
 ```

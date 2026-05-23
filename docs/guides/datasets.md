@@ -1,7 +1,7 @@
 # Datasets and splits
 
 These 14 node-classification benchmarks are the standard testbed for
-**heterophily research** — the regime where connected nodes tend to belong
+**heterophily research**: the regime where connected nodes tend to belong
 to *different* classes. The homophily ratio
 
 $$
@@ -37,7 +37,7 @@ Canonical Pei et al. (2020) splits. The filename convention
 actual ratios; the true split is approximately 48/32/20 train/val/test.
 :::
 
-:::{grid-item-card} Geom-GCN filtered ≈48/32/20
+:::{grid-item-card} Geom-GCN filtered ~48/32/20
 **Datasets:** chameleon_filtered, squirrel_filtered.
 
 Platonov et al. (2023) found that the original chameleon and squirrel

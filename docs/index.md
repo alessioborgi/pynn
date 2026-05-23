@@ -49,19 +49,19 @@ The NSD diffusion update is $\mathbf{H}^{(t+1)} = \sigma\!\left(\left(I - \sigma
 :::{grid-item-card} Diagonal
 {py:class}`sheaf_mpnn.nsd.DiagonalNSDConv`
 
-Restriction maps are diagonal $d \times d$ matrices — $d$ parameters per edge endpoint. Lowest capacity; fastest training.
+Restriction maps are diagonal $d \times d$ matrices, $d$ parameters per edge endpoint. Lowest capacity; fastest training.
 :::
 
 :::{grid-item-card} General
 {py:class}`sheaf_mpnn.nsd.GeneralNSDConv`
 
-Unrestricted $d \times d$ maps — $d^2$ parameters per edge endpoint. Maximum expressivity; can represent any linear relationship between stalks.
+Unrestricted $d \times d$ maps, $d^2$ parameters per edge endpoint. Maximum expressivity; can represent any linear relationship between stalks.
 :::
 
 :::{grid-item-card} Orthogonal
 {py:class}`sheaf_mpnn.nsd.OrthogonalNSDConv`
 
-Orthogonal maps parameterised via Cayley transform of $\tfrac{d(d-1)}{2}$ scalars — $O(d)$ parameters, norm-preserving diffusion.
+Orthogonal maps parameterised via Cayley transform of $\tfrac{d(d-1)}{2}$ scalars, $O(d)$ parameters, norm-preserving diffusion.
 :::
 ::::
 
