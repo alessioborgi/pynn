@@ -1,0 +1,62 @@
+# Example NSD sweep on Cora.
+#
+# Run with:
+#   python -m exp.sweeps.sweep --yaml-path configs/nsd_cora_sweep.yaml --preset cora
+#
+# n_trials and n_seeds_per_trial are set here under config: — no CLI flags needed.
+
+model: nsd
+
+# Optional: override the preset's dataset (omit to use the preset's default).
+# dataset:
+#   name: texas
+#   root: exp/data
+
+search_space:
+  variant:
+    type: categorical
+    choices: [diagonal, general, orthogonal]
+  stalk_dim:
+    type: int
+    low: 2
+    high: 8
+  hidden_dim:
+    type: categorical
+    choices: [8, 16, 32, 64]
+  num_layers:
+    type: int
+    low: 1
+    high: 6
+  alpha:
+    type: float
+    low: 0.01
+    high: 4.0
+    log: true
+  input_dropout:
+    type: float
+    low: 0.0
+    high: 0.8
+  dropout:
+    type: float
+    low: 0.0
+    high: 0.6
+  lr:
+    type: float
+    low: 0.0001
+    high: 0.1
+    log: true
+  weight_decay:
+    type: float
+    low: 0.000001
+    high: 0.1
+    log: true
+
+config:
+  n_trials: 100
+  n_seeds_per_trial: 1       # increase to 3-5 for variance-aware tuning
+  std_weight: 0.0            # penalty weight on std; 0 = optimise pure mean
+  study_name: nsd-cora
+  seed: 42
+  # storage: sqlite:///nsd_cora.db   # uncomment for distributed / resumable sweeps
+  # wandb_project: nsd-cora          # uncomment to log to Weights & Biases
+  # wandb_entity: your-team

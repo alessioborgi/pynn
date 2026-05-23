@@ -1,10 +1,13 @@
-# Neural Sheaf Diffusion – PyTorch Implementation
+# Sheaf Neural Networks – PyTorch Implementation
 
-A clean PyTorch / PyG implementation of **Neural Sheaf Diffusion (NSD)** with three restriction-map variants and a benchmark suite across 14 node-classification datasets.
+A clean PyTorch / PyG implementation library of  **Sheaf Neural Networks** comprising all variants and a benchmark suite with 20+ Datasets.
 
 **Copyright © 2026, _Sheaf Neural Networks as Message Passing_.**
-Authors: Alessio Borgi, Gabriele Onorato, Luke Braithwhite, Mario Severino,
+Authors: Alessio Borgi, Gabriele Onorato, Luke Braithwaite, Mario Severino,
 Emanuele Mule, Dario Loi, Francesco Restuccia, Fabrizio Silvestri, and Pietro Liò.
+
+
+![Sheaf Neural Networks as Message Passing](img/MPSNN-1.png)
 
 ## Quick Start
 
@@ -24,7 +27,7 @@ from sheaf_mpnn.nsd import NSDModel, NSDVariant
 
 model = NSDModel(
     in_channels=1433, out_channels=7,
-    d=4, hidden_dim=16, num_layers=2,
+    stalk_dim=4, hidden_dim=16, num_layers=2,
     variant=NSDVariant.GENERAL, alpha=1.0,
 )
 logits = model(x, edge_index)  # → [N, 7]
@@ -40,7 +43,7 @@ from sheaf_mpnn.nsd import GeneralNSDConv
 d, hidden_dim = 4, 16
 encoder = nn.Linear(1433, d * hidden_dim)
 layer = GeneralNSDConv(
-    d=d,
+    stalk_dim=d,
     in_channels=hidden_dim,
     hidden_dim=hidden_dim,
     context_dim=d * hidden_dim,
@@ -100,7 +103,7 @@ Every dataset has a built-in preset. Any field can still be overridden:
 
 ```bash
 python -m exp.run --preset cora
-python -m exp.run --preset texas --model.variant orthogonal --model.d 5
+python -m exp.run --preset texas --model.variant orthogonal --model.stalk-dim 5
 ```
 
 Run `python -m exp.run --help` for the full list of flags.
@@ -114,13 +117,40 @@ python -m exp.run --preset cora \
 
 ### Hyperparameter Sweeps
 
-```bash
-python -m exp.sweep --preset cora --n-trials 100
+Sweeps are YAML-driven. Create a config file specifying the model, search space, and
+Optuna settings, then run:
 
-# Distributed sweep via shared storage
-python -m exp.sweep --preset cora --study-name nsd-cora \
-    --storage sqlite:///nsd_sweep.db --n-trials 50
+```bash
+python -m exp.sweeps.sweep --yaml-path sweep.yaml --preset cora
 ```
+
+The sweep CLI only accepts `--yaml-path` and `--preset`. All other options (number of
+trials, epochs, folds, storage) are set inside the YAML file.
+
+Example `sweep.yaml`:
+
+```yaml
+model: nsd
+search_space:
+  variant:
+    type: categorical
+    choices: [diagonal, general, orthogonal]
+  stalk_dim:
+    type: int
+    low: 2
+    high: 8
+  lr:
+    type: float
+    low: 0.0001
+    high: 0.1
+    log: true
+config:
+  n_trials: 100
+  study_name: nsd-cora
+  # storage: sqlite:///sweep.db  # uncomment for distributed / resumable sweeps
+```
+
+Override the preset's dataset directly in the YAML with a `dataset:` block.
 
 ## Running Tests
 
@@ -128,33 +158,20 @@ python -m exp.sweep --preset cora --study-name nsd-cora \
 uv run pytest              # full suite
 uvx ruff check .           # lint
 uvx ruff format --check .  # formatting
+uvx prek install           # install git hooks (defined in prek.toml)
 ```
 
 ## Citation
 
+If you use this library in your research, please cite our forthcoming paper:
+
 ```bibtex
-@inproceedings{bodnar2022neural,
-title={Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in {GNN}s},
-author={Cristian Bodnar and Francesco Di Giovanni and Benjamin Paul Chamberlain and Pietro Lio and Michael M. Bronstein},
-booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
-editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
-year={2022},
-url={https://openreview.net/forum?id=vbPsD-BhOZ}
-}
-
-@inproceedings{pei2020geomgcn,
-  title     = {Geom-{GCN}: Geometric Graph Convolutional Networks},
-  author    = {Pei, Hongbin and Wei, Bingzhe and Chang, Kevin Chen-Chuan
-               and Lei, Yu and Yang, Bo},
-  booktitle = {International Conference on Learning Representations (ICLR)},
-  year      = {2020}
-}
-
-@inproceedings{platonov2023a,
-  title     = {A Critical Look at the State of Graph Learning Benchmarks},
-  author    = {Platonov, Oleg and Kuznedelev, Denis and Diskin, Michael
-               and Babenko, Artem and Prokhorenkova, Liudmila},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
-  year      = {2023}
+@unpublished{borgi2026sheafneuralnetworks,
+  title  = {Sheaf Neural Networks as Message Passing},
+  author = {Borgi, Alessio and Onorato, Gabriele and Braithwaite, Luke
+            and Severino, Mario and Mule, Emanuele and Loi, Dario
+            and Restuccia, Francesco and Silvestri, Fabrizio and Liò, Pietro},
+  year   = {2026},
+  note   = {Manuscript in preparation}
 }
 ```
