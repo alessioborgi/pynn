@@ -2,7 +2,7 @@
 
 ## Use the layers directly
 
-Each NSD convolution layer expects node features as a flat vector of $d \cdot \text{channels}$ values per node — input shape `[N, d * in_channels]`. The stalk dimension $d$ controls the per-node vector space assigned by the sheaf; larger $d$ allows richer inter-node maps at the cost of more parameters. Output shape is `[N, d * out_channels]`.
+Each NSD convolution layer expects node features as a flat vector of $d \cdot \text{channels}$ values per node, input shape `[N, d * in_channels]`. The stalk dimension $d$ controls the per-node vector space assigned by the sheaf; larger $d$ allows richer inter-node maps at the cost of more parameters. Output shape is `[N, d * out_channels]`.
 
 ```python
 import torch
@@ -15,7 +15,7 @@ conv = DiagonalNSDConv(in_channels=16, out_channels=16, d=4)
 h = conv(x, edge_index)               # shape: [10, 4 * 16]
 ```
 
-The `variant` argument selects the restriction-map family: `"diagonal"` ($d$ params/edge endpoint), `"general"` ($d^2$ params), or `"orthogonal"` ($d(d-1)/2$ params, norm-preserving).
+The `variant` argument selects the restriction-map family: `"diagonal"` ($d$ params/edge endpoint), `"general"` ($d^2$ params), `"orthogonal"` ($\tfrac{d(d-1)}{2}$ params, norm-preserving).
 
 ## Run a preset
 
